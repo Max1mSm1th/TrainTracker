@@ -1,0 +1,158 @@
+body {
+    font-family: 'Press Start 2P', cursive; 
+    background-color: #0414A7;
+    margin: 40px;
+    font-size: 15px;
+}
+
+.form-group {
+    color: #C6C669;
+}
+
+.btn {
+    font-family: 'Press Start 2P', cursive; 
+    background-color: transparent;
+    padding: 0px;
+    border: 0px;
+    color: #D94F5F;
+    font-size: 15px;
+    margin: 20px 0px 0px 0px;
+}
+
+h1 {
+    animation: blinker 1s linear infinite;
+    text-align: right;
+    color: #D2D3ED;
+    font-size: 30px;
+    margin: 0px 0px 40px 0px;
+}
+
+#name-column {
+    text-align: left;
+    color: #D2D3ED;
+}
+
+#destination-column {
+    text-align: left;
+    color: #D2D3ED;
+}
+
+#time-column {
+    text-align: left;
+    color: #D2D3ED;
+}
+
+#frequency-column {
+    text-align: left;
+    color: #D2D3ED;
+}
+
+#header {
+    text-align: left;
+    margin: 0px 0px 20px 0px;
+    color: #54d7f0
+}
+
+#name-input {
+    background-color: transparent;
+    margin: 0px 0px 5px 0px;
+    border: 0px;
+    font-size: 15px;
+    color: #C6C669;
+    font-family: 'Press Start 2P', cursive; 
+    outline-color: transparent;
+    outline-style: none;
+}
+
+#destination-input {
+    background-color: transparent;
+    padding: 0px;
+    border: 0px;
+    font-size: 15px;
+    color: #C6C669;
+    font-family: 'Press Start 2P', cursive; 
+    outline-color: transparent;
+    outline-style: none;
+}
+
+#time-input {
+    background-color: transparent;
+    padding: 0px;
+    border: 0px;
+    font-size: 15px;
+    color: #C6C669;
+    font-family: 'Press Start 2P', cursive; 
+    outline-color: transparent;
+    outline-style: none;
+}
+
+#frequency-input {
+    background-color: transparent;
+    padding: 0px;
+    border: 0px;
+    font-size: 15px;
+    color: #C6C669;
+    font-family: 'Press Start 2P', cursive; 
+    outline-color: transparent;
+    outline-style: none;
+}
+
+table {
+    margin: 40px 0px 0px 0px;
+}
+
+
+/* BLINKINKG */
+
+
+.title {
+    text-align: right;
+    color: #D2D3ED;
+    font-size: 30px;
+    margin: 0px 0px 40px 0px;
+}
+
+.blink_me {
+
+    -webkit-animation-name: blinker;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    
+    -moz-animation-name: blinker;
+    -moz-animation-duration: 1s;
+    -moz-animation-timing-function: linear;
+    -moz-animation-iteration-count: infinite;
+    
+    animation-name: blinker;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    text-align: right;
+    color: #D2D3ED;
+    font-size: 30px;
+    margin: 0px 0px 40px 0px;
+}
+
+
+
+@-moz-keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@-webkit-keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+
+

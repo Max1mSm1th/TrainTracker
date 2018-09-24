@@ -1,0 +1,155 @@
+<DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Train Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/reset.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+</head>
+<body>
+
+    <div class="title">
+    <span class="blink_me">TRAIN TRACKER</span> 
+    </div>
+      
+    <div class="form-group">
+        <label for="name-input">TRAIN NAME:</label>
+        <input class="form-control" id="name-input" type="text">
+    </div>
+    
+    <div class="form-group">
+        <label for="destination-input">DESTINATION:</label>
+        <input class="form-control" id="destination-input" type="text">
+    </div>
+    <div class="form-group">
+        <label for="time-input">FIRST TRAIN TIME (HH:MM):</label>
+        <input class="form-control" id="time-input" type="time">
+    </div>
+    <div class="form-group">
+        <label for="frequency-input">FREQUENCY (MIN):</label>
+        <input class="form-control" id="frequency-input" type="text">
+    </div>
+        
+    <button class="btn" id="add-train" type="submit">SUBMIT</button>
+       
+    
+    <table style="width:100%">
+    <tr>
+        <th><div id="header">NAME</div></th>
+        <th><div id="header">DESTINATION</div></th>
+        <th><div id="header">TIME</div></th>
+        <th><div id="header">FREQUENCY</div></th>
+    </tr>
+    <tr>
+        <th><div id="name-column"></div></th>
+        <th><div id="destination-column"></div></th>
+        <th><div id="time-column"></div></th>
+        <th><div id="frequency-column"></div></th>
+    </tr>
+    </table>
+
+<!--Script here-->
+
+    <script src="https://code.jquery.com/jquery.js"></script>
+
+
+    <script>
+
+
+(function blink() { 
+  $('.blink_me').fadeOut(500).fadeIn(500, blink); 
+})();
+
+
+// MODIFY COOKIES
+
+    function readCookie(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(";");
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) === " ") c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) {
+          return c.substring(nameEQ.length, c.length);
+        }
+      }
+      
+    }
+
+
+ // Capture Button Click
+
+ $("#add-train").on("click", function(event) {
+      event.preventDefault();
+
+      // Capture User Inputs and store into variables
+      var name = $("#name-input").val().trim();
+      var destination = $("#destination-input").val().trim();
+      var time = $("#time-input").val().trim();
+      var frequency = $("#frequency-input").val().trim();
+
+      console.log(name);
+      console.log(destination);
+      console.log(time);
+      console.log(frequency);
+
+      // Output all of the new information into the relevant sections
+      $("#name-column").text(name);
+      $("#destination-column").text(destination);
+      $("#time-column").text(time);
+      $("#frequency-column").text(frequency);
+
+      // Clear the previous cookie by setting it to equal to nothing and its expiration date to a past time
+      document.cookie = "name=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+
+      // Store all of the parameters as part of the cookie string
+      document.cookie = "name=" + name;
+      document.cookie = "destination=" + destination;
+      document.cookie = "time=" + time;
+      document.cookie = "frequency=" + frequency;
+
+      // Print all the cookies
+      console.log(document.cookie);
+
+      // Recover the parameters by passing the cookie parameters of interest,
+      // through a function that breaks the document.cookie
+      var cookieName = readCookie("name");
+      var cookieDestination = readCookie("destination");
+      var cookieTime = readCookie("time");
+      var cookieFrequency = readCookie("frequency");
+
+      // Log all of the cookies to test
+      console.log(cookieName);
+      console.log(cookieDestination);
+      console.log(cookieTime);
+      console.log(cookieFrequency);
+
+      $("#time-input").val("");
+      $("#name-input").val("");
+      $("#destination-input").val("");
+      $("#frequency-input").val("");
+    });
+
+    
+    $("#name-column").text(readCookie("name"));
+    $("#destination-column").text(readCookie("destination"));
+    $("#time-column").text(readCookie("time"));
+    $("#frequency-column").text(readCookie("frequency"));
+
+
+
+
+
+    
+    
+    
+    </script>
+
+
+
+    
+</body>
+</html>
