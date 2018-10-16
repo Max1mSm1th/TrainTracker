@@ -5,58 +5,78 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Train Tracker</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> -->
     <link rel="stylesheet" type="text/css" media="screen" href="assets/reset.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="assets/style.css" />
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
 
     <div class="title">
-    <span class="blink_me">TRAIN TRACKER</span> 
-    </div>
-      
-    <div class="form-group">
-        <label for="name-input">TRAIN NAME:</label>
-        <input class="form-control" id="name-input" type="text">
-    </div>
-    
-    <div class="form-group">
-        <label for="destination-input">DESTINATION:</label>
-        <input class="form-control" id="destination-input" type="text">
+    <span class="blink_me">Train Tracker</span> 
     </div>
     <div class="form-group">
-        <label for="time-input">FIRST TRAIN TIME (HH:MM):</label>
+        <label for="name-input">Train Name:</label>
+        <input class="form-control" id="name-input" placeholder="____" type="text">
+    </div>
+    <div class="form-group">
+        <label for="destination-input">Destination:</label>
+        <input class="form-control" id="destination-input" placeholder="____" type="text">
+    </div>
+    <div class="form-group">
+        <label for="time-input">First Train Time (HH:mm):</label>
         <input class="form-control" id="time-input" type="time">
     </div>
     <div class="form-group">
-        <label for="frequency-input">FREQUENCY (MIN):</label>
-        <input class="form-control" id="frequency-input" type="text">
+        <label for="frequency-input">Frequency (min):</label>
+        <input class="form-control" id="frequency-input" placeholder="____" type="text">
     </div>
+   
         
-    <button class="btn" id="add-train" type="submit">SUBMIT</button>
+    <button class="btn" id="add-train" type="submit">[SUBMIT]</button>
        
-    
-    <table style="width:100%">
-    <tr>
-        <th><div id="header">NAME</div></th>
-        <th><div id="header">DESTINATION</div></th>
-        <th><div id="header">TIME</div></th>
-        <th><div id="header">FREQUENCY</div></th>
-    </tr>
-    <tr>
-        <th><div id="name-column"></div></th>
-        <th><div id="destination-column"></div></th>
-        <th><div id="time-column"></div></th>
-        <th><div id="frequency-column"></div></th>
-    </tr>
-    </table>
+  
+          
+                  
+              <table class="table table-sm table-hover" id='train-table'>
+                <thead>
+                  <tr>
+                    <th scope="col">TRAIN NAME</th>
+                    <th scope="col">DESTINATION</th>
+                    <th scope="col">FREQUENCY</th>
+                    <th scope="col">NEXT ARRIVAL</th>
+                    <th scope="col">MINUTES AWAY</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+        
+        
+      
+      
 
 <!--Script here-->
 
     <script src="https://code.jquery.com/jquery.js"></script>
-
+    <script src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"></script>
 
     <script>
+
+
+    var config = {
+    apiKey: "AIzaSyBslK6JRXYyn98jHuzElAdOzqv6qsXn3Xw",
+    authDomain: "traintracker-c76b7.firebaseapp.com",
+    databaseURL: "https://traintracker-c76b7.firebaseio.com",
+    projectId: "traintracker-c76b7",
+    storageBucket: "traintracker-c76b7.appspot.com",
+    messagingSenderId: "765530452651"
+  };
+  firebase.initializeApp(config);
+
+
+var database = firebase.database();
 
 
 (function blink() { 
@@ -64,80 +84,88 @@
 })();
 
 
-// MODIFY COOKIES
-
-    function readCookie(name) {
-      var nameEQ = name + "=";
-      var ca = document.cookie.split(";");
-      for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) === " ") c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) === 0) {
-          return c.substring(nameEQ.length, c.length);
-        }
-      }
-      
-    }
-
 
  // Capture Button Click
 
  $("#add-train").on("click", function(event) {
       event.preventDefault();
 
+    
       // Capture User Inputs and store into variables
-      var name = $("#name-input").val().trim();
-      var destination = $("#destination-input").val().trim();
-      var time = $("#time-input").val().trim();
-      var frequency = $("#frequency-input").val().trim();
+      var tempName = $("#name-input").val().trim();
+      var tempDestination = $("#destination-input").val().trim();
+      var tempTime = $("#time-input").val().trim();
+      var tempFrequency = $("#frequency-input").val().trim();
 
-      console.log(name);
-      console.log(destination);
-      console.log(time);
-      console.log(frequency);
 
+
+
+
+
+// First Time (pushed back 1 year to make sure it comes before current time)
+var firstTimeConverted = moment(tempTime, "HH:mm").subtract(1, "years");
+var currentTime = moment();
+var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+var tRemainder = diffTime % tempFrequency;
+var tMinutesTillTrain = tempFrequency - tRemainder;
+
+
+var tempArrival = moment().add(tMinutesTillTrain, "minutes");
+
+
+
+
+
+    database.ref().push({
+    name: tempName,
+    destination: tempDestination,
+    time: tempTime,
+    frequency: tempFrequency,
+    arrival: tempArrival + tempFrequency,
+  });
+
+ 
+
+
+    $("#name-input").val("");
+  $("#destination-input").val("");
+  $("#time-input").val("");
+  $("#frequency-input").val("");
       // Output all of the new information into the relevant sections
-      $("#name-column").text(name);
-      $("#destination-column").text(destination);
-      $("#time-column").text(time);
-      $("#frequency-column").text(frequency);
+     
 
-      // Clear the previous cookie by setting it to equal to nothing and its expiration date to a past time
-      document.cookie = "name=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+ });
 
-      // Store all of the parameters as part of the cookie string
-      document.cookie = "name=" + name;
-      document.cookie = "destination=" + destination;
-      document.cookie = "time=" + time;
-      document.cookie = "frequency=" + frequency;
+database.ref().on("child_added", function(childSnapshot) {
+    console.log(childSnapshot.val());
 
-      // Print all the cookies
-      console.log(document.cookie);
 
       // Recover the parameters by passing the cookie parameters of interest,
       // through a function that breaks the document.cookie
-      var cookieName = readCookie("name");
-      var cookieDestination = readCookie("destination");
-      var cookieTime = readCookie("time");
-      var cookieFrequency = readCookie("frequency");
-
-      // Log all of the cookies to test
-      console.log(cookieName);
-      console.log(cookieDestination);
-      console.log(cookieTime);
-      console.log(cookieFrequency);
-
-      $("#time-input").val("");
-      $("#name-input").val("");
-      $("#destination-input").val("");
-      $("#frequency-input").val("");
-    });
+      var tempName = childSnapshot.val().name;
+      var tempDestination = childSnapshot.val().destination;
+      var tempTime = childSnapshot.val().time;
+      var tempFrequency = childSnapshot.val().frequency;
+      var nextTrain = childSnapshot.val().time;
 
     
-    $("#name-column").text(readCookie("name"));
-    $("#destination-column").text(readCookie("destination"));
-    $("#time-column").text(readCookie("time"));
-    $("#frequency-column").text(readCookie("frequency"));
+
+
+
+
+      var newRow = $("<tr>").append(
+    $("<td>").append(tempName),
+    $("<td>").append(tempDestination),
+    $("<td>").append(tempFrequency),
+    $("<td>").append(tempTime),
+    $("<td>").append(""),
+   
+  );
+
+  // Append the new row to the table
+  $("#train-table > tbody").append(newRow);
+});
+
 
 
 

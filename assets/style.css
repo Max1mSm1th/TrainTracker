@@ -2,7 +2,7 @@ body {
     font-family: 'Press Start 2P', cursive; 
     background-color: #0414A7;
     margin: 40px;
-    font-size: 15px;
+    font-size: 10px;
 }
 
 .form-group {
@@ -15,15 +15,21 @@ body {
     padding: 0px;
     border: 0px;
     color: #D94F5F;
-    font-size: 15px;
+    font-size: 10px;
     margin: 20px 0px 0px 0px;
+    outline-color: transparent;
+    outline-style: none;
+}
+
+.btn:hover {
+    color: #45BA73;
 }
 
 h1 {
     animation: blinker 1s linear infinite;
     text-align: right;
     color: #D2D3ED;
-    font-size: 30px;
+    font-size: 20px;
     margin: 0px 0px 40px 0px;
 }
 
@@ -55,9 +61,9 @@ h1 {
 
 #name-input {
     background-color: transparent;
-    margin: 0px 0px 5px 0px;
+    margin: 0px 0px 10px 0px;
     border: 0px;
-    font-size: 15px;
+    font-size: 10px;
     color: #C6C669;
     font-family: 'Press Start 2P', cursive; 
     outline-color: transparent;
@@ -66,9 +72,10 @@ h1 {
 
 #destination-input {
     background-color: transparent;
+    margin: 0px 0px 6px 0px;
     padding: 0px;
     border: 0px;
-    font-size: 15px;
+    font-size: 10px;
     color: #C6C669;
     font-family: 'Press Start 2P', cursive; 
     outline-color: transparent;
@@ -77,9 +84,10 @@ h1 {
 
 #time-input {
     background-color: transparent;
+    margin: 0px 0px 6px 0px;
     padding: 0px;
     border: 0px;
-    font-size: 15px;
+    font-size: 10px;
     color: #C6C669;
     font-family: 'Press Start 2P', cursive; 
     outline-color: transparent;
@@ -90,7 +98,7 @@ h1 {
     background-color: transparent;
     padding: 0px;
     border: 0px;
-    font-size: 15px;
+    font-size: 10px;
     color: #C6C669;
     font-family: 'Press Start 2P', cursive; 
     outline-color: transparent;
@@ -108,8 +116,6 @@ table {
 .title {
     text-align: right;
     color: #D2D3ED;
-    font-size: 30px;
-    margin: 0px 0px 40px 0px;
 }
 
 .blink_me {
@@ -130,10 +136,21 @@ table {
     animation-iteration-count: infinite;
     text-align: right;
     color: #D2D3ED;
-    font-size: 30px;
+    font-size: 20px;
     margin: 0px 0px 40px 0px;
 }
 
+
+th {
+    color: #54d7f0;
+    padding: 30px 150px 30px 0px;
+}
+
+td {
+    margin: 0px;
+    padding: 0px 0px 10px 0px;
+    color: white;
+}
 
 
 @-moz-keyframes blinker {  
